@@ -6,6 +6,7 @@ interface Guestbook {
   id: number;
   name: string;
   message: string;
+  created_at: string;
 }
 
 const useGuestbookQuery = () => {

@@ -2,6 +2,10 @@ import useGuestbookMutation from './apis/useGuestbookMutation';
 import useGuestbookQuery from './apis/useGuestbookQuery';
 import { useInput } from '@rapiders/react-hooks';
 
+const getDisplayDate = (date: string) => {
+  return date.split('T')[0];
+};
+
 function App() {
   const { data } = useGuestbookQuery();
   const { value: name, onChange, reset } = useInput('');
@@ -15,13 +19,24 @@ function App() {
 
   const handleSubmit = async () => {
     if (!name || !message) return;
+    const password = await new Promise<string>((resolve) =>
+      resolve(prompt('등록할 비밀번호를 입력해주세요') || '')
+    );
 
     await postMutate({
       name,
       message,
+      password,
     });
     reset();
     resetMessage();
+  };
+
+  const handleDelete = async (id: number) => {
+    const password = await new Promise<string>((resolve) =>
+      resolve(prompt('등록한 비밀번호를 입력해주세요') || '')
+    );
+    await deleteMutate({ id, password });
   };
 
   return (
@@ -35,12 +50,15 @@ function App() {
                 <div key={guestbook.id}>{guestbook.name}</div>
                 <button
                   className="text-[16px]"
-                  onClick={() => deleteMutate(guestbook.id)}
+                  onClick={() => handleDelete(guestbook.id)}
                 >
                   X
                 </button>
               </div>
-              <div>{guestbook.message}</div>
+              <div className="flex justify-between items-center w-full">
+                <div>{guestbook.message}</div>
+                <div>{getDisplayDate(guestbook.created_at)}</div>
+              </div>
             </div>
           ))}
           <div className="flex justify-between items-center">
