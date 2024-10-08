@@ -67,12 +67,13 @@ const appStart = async () => {
       .createHash('sha512')
       .update(password + PASSWORD) //salt
       .digest('hex');
-
     const isRight = results[0].hash === hashPassword;
+
     if (!isRight) {
       res.status(400).json({
         message: '비밀번호가 다릅니다.',
       });
+      return;
     }
     await connection.query('DELETE from guestbook where id=?', [id]);
     res.json({
