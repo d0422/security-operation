@@ -65,7 +65,7 @@ function App() {
             <div>작성자</div>
             <input
               type="text"
-              className="rounded-md p-1 text-black"
+              className="rounded-md p-1 text-black max-w-32"
               value={name}
               onChange={onChange}
             />
