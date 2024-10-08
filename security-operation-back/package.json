@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "upload": "scp -i security-operation.pem -r ./.env ubuntu@54.180.5.76:~/security-operation/.env"
+    "upload": "scp -i security-operation.pem -r ./index.js ubuntu@54.180.5.76:~/security-operation/index.js"
   },
   "keywords": [],
   "author": "",
